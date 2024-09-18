@@ -1,33 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+import Routing from './Routing';
+import { useContext } from 'react';
+import { Type } from "./Utility/action.type.jsx";
+import { auth } from './Utility/firebase.js'
+import { DataContext } from './Components/DataProvider/DataProvider';
 
-function App() {
-  const [count, setCount] = useState(0)
 
+function App () {
+  const [{user}, dispatch] = useContext(DataContext);
+
+  useEffect (()=>{
+    auth.onAuthStateChanged((authUser)=>{
+      if(authUser){
+        dispatch({
+          type:Type.SET_USER,
+          user:authUser
+        })
+      }else{
+        dispatch({
+          type:Type.SET_USER,
+          user:null,
+        });
+      }
+    });
+  }, [])
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routing />
     </>
   )
 }
