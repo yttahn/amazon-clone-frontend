@@ -36,30 +36,45 @@ function Payment() {
     console.log(e);
     e?.error?.message ? setCardError(e?.error?.message) : setCardError("");
   };
-
   const handlePayment = async (e) => {
     e.preventDefault();
 
     try {
-      // step 1. backend || functions ---> contact to the client secret
+      // Step 1: Backend request to create a PaymentIntent and get clientSecret
       setProcessing(true);
       const response = await axiosInstance({
         method: "POST",
-        url: `/payment/create?total=${total * 100}`,
+        url: `payment/create?total=${total * 100}`,
       });
+      console.log(total);
 
-      // console.log(response.data);
+      // Check if the response contains the clientSecret
+      console.log("Backend response:", response.data);
       const clientSecret = response.data?.clientSecret;
+      if (!clientSecret) {
+        throw new Error("ClientSecret not found in response.");
+      }
 
-      // Step 2. React side confirmation
-      const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      });
-      // console.log(confirmation);
+      // Step 2: Confirm the payment with Stripe
+      const { paymentIntent, error } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        }
+      );
 
-      // Step 3. After the confirmation, -- > order firestore database save, clear basket
+      // Check if the paymentIntent exists
+      console.log("PaymentIntent:", paymentIntent);
+      if (error) {
+        console.error("Payment failed:", error);
+        setCardError(error.message);
+        setProcessing(false);
+        return;
+      }
+
+      // Step 3: Save order to Firestore if payment is successful
       await db
         .collection("users")
         .doc(user.uid)
@@ -70,18 +85,16 @@ function Payment() {
           amount: paymentIntent.amount,
           created: paymentIntent.created,
         });
-      //Lets empty the basket now that the order has been processed
 
+      // Clear basket after successful payment
       dispatch({ type: Type.EMPTY_BASKET });
 
       setProcessing(false);
-      navigate("/Orders", { state: { msg: "you have placed new Order" } });
+      navigate("/Orders", { state: { msg: "You have placed a new order" } });
     } catch (error) {
-      console.log(error);
+      console.error("Payment error:", error);
       setProcessing(false);
     }
-
-    //
   };
 
   return (

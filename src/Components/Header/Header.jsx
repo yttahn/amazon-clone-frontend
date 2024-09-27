@@ -36,7 +36,7 @@ function Header() {
             <SlLocationPin />
           </div>
           <div>
-            <p>Delivering to Lebu area</p>
+            <p>Delivering to Bole area</p>
             <p className={classes.bold_text}>Update Location</p>
           </div>
         </div>
