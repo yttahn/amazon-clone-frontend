@@ -1,6 +1,6 @@
 import React from "react";
 import { imgs } from "../../Utility/data";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import classes from "./Carousel.module.css";
 
