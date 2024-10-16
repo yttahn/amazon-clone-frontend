@@ -1,0 +1,7 @@
+
+/* Example styles for Swiper */
+.swiper-slide img {
+  display: block;
+  width: 100%; /* Ensures image covers the slide */
+  height: auto; /* Maintains aspect ratio */
+}

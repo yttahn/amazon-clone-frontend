@@ -8,3 +8,11 @@ import img7 from "../assets/Carousel/img/10007.jpg";
 import img8 from "../assets/Carousel/img/10008.jpg";
 
 export const imgs = [img1, img2, img3, img4, img5, img6, img7, img8];
+
+
+// Example of the imgs array
+//export const imgs = [
+//  "https://via.placeholder.com/300x200",  // Replace with actual image URLs
+//  "https://via.placeholder.com/300x200",
+//  "https://via.placeholder.com/300x200"
+//];

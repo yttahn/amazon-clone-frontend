@@ -1,11 +1,11 @@
-// Import the functions you need from the SDKs you need
+
 import firebase from "firebase/compat/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
-// Your web app's Firebase configuration, now using environment variables
+// Your web app's Firebase configuration from environment variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -21,3 +21,4 @@ const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);
 export const db = app.firestore();
+
