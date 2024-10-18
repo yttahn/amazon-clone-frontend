@@ -15,9 +15,11 @@ function CarouselEffect() {
       showArrows={false}  // Optionally hide navigation arrows if desired
     >
       {imgs.map((imageItem, index) => (
+        return (
         <div className={classes.hero__image} key={index}>
           <img src={imageItem} alt={`carousel-item-${index}`} />
         </div>
+        )
       ))}
     </Carousel>
   );
