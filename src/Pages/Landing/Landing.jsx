@@ -1,5 +1,5 @@
 import React from 'react';
-import CarouselEffect from '../../Components/Carousel/CarouselEffect';
+import MyCarousel from '../../Components/Carousel/MyCarousel';
 import Category from '../../Components/Category/Category';
 import Product from '../../Components/Product/Product';
 import Layout from '../Layout/Layout'
@@ -7,7 +7,7 @@ import Layout from '../Layout/Layout'
 function Landing () {
     return (
         <Layout>
-            <CarouselEffect />
+            <MyCarousel />
             <Category />
             <Product />
         </Layout>
